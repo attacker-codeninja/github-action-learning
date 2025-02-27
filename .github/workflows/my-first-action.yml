@@ -1,14 +1,23 @@
-name: my-first-workflow-with-github-action
+name: bandit-ci
 
 on: push
 
 jobs:
-  say_hello:
+  bandit-scan:
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: print hello world
-        run: echo "Hello World"
+      - name: setup Python
+        uses: actions/setup-python@v2
+        with:
+            python-version: 3.8
+
+      - name: install bandit
+        run: pip install bandit
+
+      - name: run bandt
+        run: bandit -r .
